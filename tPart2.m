@@ -58,7 +58,7 @@ outputValues = evalfis(fis, inputValues);
 disp(outputValues);
 
 % Define the objective function to maximize Alarm
-objectiveFunction = @(inputValues) -evalfis(fis, inputValues).Outputs(3).mfValues(3);
+objectiveFunction = @(inputValues) -outputValues(3);
 
 % Genetic algorithm options
 options = optimoptions('ga', 'PopulationSize', 50, 'MaxGenerations', 100);
@@ -76,7 +76,6 @@ disp(['Optimal Speaker Volume: ', num2str(-objectiveOptimal)]);
 
 % Evaluate fuzzy inference system with optimal input values
 outputOptimal = evalfis(fis, inputOptimal);
-disp(['Optimal Heater Power: ', num2str(outputOptimal.Outputs(1).mfValues(3))]);
-disp(['Optimal LightSystem: ', num2str(outputOptimal.Outputs(2).mfValues(3))]);
-disp(['Optimal Speaker Volume: ', num2str(outputOptimal.Outputs(3).mfValues(3))]);
-
+disp(['Optimal Heater Power: ', num2str(outputOptimal(1))]);
+disp(['Optimal LightSystem: ', num2str(outputOptimal(2))]);
+disp(['Optimal Speaker Volume: ', num2str(outputOptimal(3))]);
