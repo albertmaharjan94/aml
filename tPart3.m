@@ -1,5 +1,3 @@
-% PART 1
-% Fuzzy Init
 fis = mamfis('Name', 'Intelligence Flat');
  
 % Input
@@ -61,7 +59,8 @@ outputValues = evalfis(fis, inputValues);
 
 % particleswarm
 % Define the objective function to maximize Alarm
-objectiveFunction = @(inputValues) -evalfis(fis, inputValues).Outputs(3).mfValues(3);
+disp("Particle Swarn....")
+objectiveFunction = @(inputValues) -outputValues(3);
 
 % Particle Swarm Optimization options
 options = optimoptions('particleswarm', 'SwarmSize', 50, 'MaxIterations', 100);
@@ -79,14 +78,16 @@ disp(['Optimal Speaker Volume: ', num2str(-objectiveOptimal)]);
 
 % Evaluate fuzzy inference system with optimal input values
 outputOptimal = evalfis(fis, inputOptimal);
-disp(['Optimal Heater Power: ', num2str(outputOptimal.Outputs(1).mfValues(3))]);
-disp(['Optimal LightSystem: ', num2str(outputOptimal.Outputs(2).mfValues(3))]);
-disp(['Optimal Speaker Volume: ', num2str(outputOptimal.Outputs(3).mfValues(3))]);
+disp(['Optimal Heater Power: ', num2str(outputOptimal(1))]);
+disp(['Optimal LightSystem: ', num2str(outputOptimal(2))]);
+disp(['Optimal Speaker Volume: ', num2str(outputOptimal(3))]);
 
+outputvalue = evalfis(fis, inputValues)
 
+disp("Pattern Search....")
 % pattern search
 % Define the objective function to maximize Alarm
-objectiveFunction = @(inputValues) -evalfis(fis, inputValues).Outputs(3).mfValues(3);
+objectiveFunction = @(inputValues) -outputvalue(3);
 
 % Pattern Search options
 options = optimoptions('patternsearch', 'InitialMeshSize', 10, 'MaxIterations', 100);
@@ -100,12 +101,13 @@ inputOptimal = patternsearch(objectiveFunction, zeros(4,1), [], [], [], [], lb, 
 objectiveOptimal = -objectiveFunction(inputOptimal);
 
 % Display results
-disp(['Optimal Input Values: ', num2str(inputOptimal)]);
+disp('Optimal Input Values: ');
+disp(inputOptimal);
+
 disp(['Optimal Speaker Volume: ', num2str(objectiveOptimal)]);
 
 % Evaluate fuzzy inference system with optimal input values
 outputOptimal = evalfis(fis, inputOptimal);
-disp(['Optimal Heater Power: ', num2str(outputOptimal.Outputs(1).mfValues(3))]);
-disp(['Optimal Lightning: ', num2str(outputOptimal.Outputs(2).mfValues(3))]);
-disp(['Optimal Speaker Volume: ', num2str(outputOptimal.Outputs(3).mfValues(3))]);
-
+disp(['Optimal Heater Power: ', num2str(outputOptimal(1))]);
+disp(['Optimal Lightning: ', num2str(outputOptimal(2))]);
+disp(['Optimal Speaker Volume: ', num2str(outputOptimal(3))]);
